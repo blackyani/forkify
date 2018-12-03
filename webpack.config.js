@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: ['babel-polyfill', './src/js/index.js'],
@@ -14,6 +15,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
+        }),
+        new ExtractTextPlugin({
+            filename: 'css/app.css',
+            allChunks: true
         })
     ],
     module: {
@@ -24,6 +29,18 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            }
+        ]
+    },
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ['css-loader', 'sass-loader'],
+                    publicPath: "/dist/css/"
+                })
             }
         ]
     }
