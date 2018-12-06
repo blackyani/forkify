@@ -1,7 +1,8 @@
 const css = require('../app.scss');
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as seachViev from './views/searchView';
-import {elements} from './views/base';
+import {elements, renderLoader, clearLoader} from './views/base';
 
 
 /* Global state of the app
@@ -23,11 +24,13 @@ const controlSearch = async () => {
         // 3) Prepare UI for results
         seachViev.clearInput();
         seachViev.clearResults();
+        renderLoader(elements.searchRes); 
 
         // 4) Seach for recipes
         await state.search.getResults();
 
         //5) render results on UI
+        clearLoader();
         seachViev.renderResults(state.search.result);
     }
 }
@@ -36,3 +39,7 @@ elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 })
+
+const r = new Recipe(46956);
+r.getRicipe();
+console.log(r);
