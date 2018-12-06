@@ -40,6 +40,15 @@ elements.searchForm.addEventListener('submit', e => {
     controlSearch();
 })
 
+elements.searchRes.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-inline');
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10);
+        seachViev.clearResults();
+        seachViev.renderResults(state.search.result, goToPage);
+    }
+})
+
 const r = new Recipe(46956);
 r.getRicipe();
 console.log(r);
