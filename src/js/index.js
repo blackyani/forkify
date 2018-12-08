@@ -26,12 +26,18 @@ const controlSearch = async () => {
         seachViev.clearResults();
         renderLoader(elements.searchRes); 
 
-        // 4) Seach for recipes
-        await state.search.getResults();
+        try {
+            // 4) Seach for recipes
+            await state.search.getResults();
 
-        //5) render results on UI
-        clearLoader();
-        seachViev.renderResults(state.search.result);
+            //5) render results on UI
+            clearLoader();
+            seachViev.renderResults(state.search.result);
+        } catch {
+            alert('Error');
+            clearLoader();
+        }
+        
     }
 }
 
@@ -49,6 +55,28 @@ elements.searchRes.addEventListener('click', e => {
     }
 })
 
-const r = new Recipe(46956);
-r.getRicipe();
-console.log(r);
+const controlRecipe = async () => {
+    // Get id from url
+    const id = window.location.hash.replace('#', '');
+    
+    if (id) {
+        //Prepare UI for changes
+
+        //Create new recipe obj
+        state.recipe = new Recipe(id);
+
+        try {
+            //Get recipe data
+            await state.recipe.getRicipe();
+            //Calc servings and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+            //Render recipe
+            console.log(state.recipe);
+        } catch (err) {
+            alert('Something wrong');
+        }
+    }
+}
+
+['hashchange', 'load'].forEach(event => window,addEventListener(event, controlRecipe));
