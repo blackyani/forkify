@@ -2,6 +2,7 @@ const css = require('../app.scss');
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as seachViev from './views/searchView';
+import * as recipeViev from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 
@@ -61,6 +62,8 @@ const controlRecipe = async () => {
     
     if (id) {
         //Prepare UI for changes
+        recipeViev.clearRecipe()
+        renderLoader(elements.recipe);
 
         //Create new recipe obj
         state.recipe = new Recipe(id);
@@ -73,7 +76,9 @@ const controlRecipe = async () => {
             state.recipe.calcTime();
             state.recipe.calcServings();
             //Render recipe
-            console.log(state.recipe);
+            clearLoader();
+            recipeViev.clearRecipe();
+            recipeViev.renderRecipe(state.recipe);
         } catch (err) {
             alert('Something wrong');
         }
