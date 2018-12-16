@@ -65,6 +65,9 @@ const controlRecipe = async () => {
         recipeViev.clearRecipe()
         renderLoader(elements.recipe);
 
+        //Highlight selected searchitem
+        if(state.search) {seachViev.highlightedSelected(id);}
+        
         //Create new recipe obj
         state.recipe = new Recipe(id);
 
