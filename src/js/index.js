@@ -1,6 +1,7 @@
 const css = require('../app.scss');
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import * as seachViev from './views/searchView';
 import * as recipeViev from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
@@ -103,6 +104,6 @@ elements.recipe.addEventListener('click', e => {
             state.recipe.updateServings('inc');
             recipeViev.updateServingsIngredients(state.recipe);
     }
-    
 });
 
+window.l = new List();
